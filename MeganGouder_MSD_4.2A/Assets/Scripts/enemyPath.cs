@@ -6,12 +6,15 @@ public class enemyPath : MonoBehaviour
     [SerializeField] List<Transform> waypoints;
     [SerializeField] float moveSpeed = 6f;
 
+    [SerializeField] WaveConfig waveConfig;
+
     int waypointIndex = 0;
     //shows the next waypoint that the enemy would want to go
     
     void Start()
     {
-      transform.position = waypoints[waypointIndex].transform.position;
+        waypoints = waveConfig.GetWaypoints();
+        transform.position = waypoints[waypointIndex].transform.position;
       //makes sure the enemy starts is the first waypoint  
     }
     void Update()
