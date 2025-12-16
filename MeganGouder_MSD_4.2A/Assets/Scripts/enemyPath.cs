@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class enemyPath : MonoBehaviour
 {
     [SerializeField] List<Transform> waypoints;
-    [SerializeField] float moveSpeed = 6f;
+    
 
     [SerializeField] WaveConfig waveConfig;
 
@@ -32,7 +32,7 @@ public class enemyPath : MonoBehaviour
             targetPosition.z = 0f;
             //to make sure the z position is zero
 
-            var movementThisFrame = moveSpeed * Time.deltaTime;
+            var movementThisFrame = waveConfig.GetEnemyMoveSpeed() * Time.deltaTime;
 
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, movementThisFrame);
 
@@ -44,8 +44,16 @@ public class enemyPath : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+
+
         }
     }
-
-
+    public void SetWaveConfig(WaveConfig config)
+    {
+        waveConfig = config;
+    }
+    
 }
+
+
+
