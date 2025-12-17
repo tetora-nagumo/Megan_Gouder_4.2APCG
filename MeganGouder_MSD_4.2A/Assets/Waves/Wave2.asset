@@ -18,3 +18,5 @@ MonoBehaviour:
   spawnRandomFactor: 0.3
   numberOfEnemies: 7
   enemyMoveSpeed: 8
+  enemyDamage: 4
+  timeBetweenWave: 8

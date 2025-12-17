@@ -13,18 +13,18 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] bool looping = false;
     void Start()
     {
-        StartCoroutine(SpawnAllWaves());
-
-        var currentWave = waveConfigs[startingWave];
-        //making the current wave to first wave
-
-        StartCoroutine(SpawnAllEnemiesInWave(currentWave));
-        //a coroutine that will spawn all the enemies in our current wave
-
-        StartCoroutine(LoopAllWaves());
+       if (looping)
+        {
+            StartCoroutine(LoopAllWaves());
+        }
+        else
+        {
+            StartCoroutine(SpawnAllWaves());
+        }
 
 
     }
+
 
     private IEnumerator LoopAllWaves()
     {
@@ -43,6 +43,7 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnAllEnemiesInWave(WaveConfig waveConfig)
     {
+        yield return new WaitForSeconds(waveConfig.GetTimeBetweenWave());
         for (int enemyCount = 0; enemyCount < waveConfig.GetNumberOfEnemies(); enemyCount++)
         {
 
@@ -50,6 +51,12 @@ public class EnemySpawner : MonoBehaviour
             waveConfig.GetEnemyPrefab(),
             waveConfig.GetWaypoints()[0].transform.position,
             Quaternion.identity);
+
+            DamageDealer damageDealer = newEnemy.GetComponent<DamageDealer>();
+            if (damageDealer != null)
+            {
+                damageDealer.SetDamage(waveConfig.GetEnemyDamage());
+            }
 
             newEnemy.GetComponent<enemyPath>().SetWaveConfig(waveConfig);
 
@@ -67,3 +74,4 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 }
+

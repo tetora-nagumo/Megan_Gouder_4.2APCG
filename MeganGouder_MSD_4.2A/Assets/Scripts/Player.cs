@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -6,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] float moveSpeed = 15f;
     [SerializeField] float padding = 1f;
     float xMin, xMax, yMin, yMax;
+    [SerializeField] int playerHealth = 100;
     void Start()
     {
         Boundaries();
@@ -39,5 +41,31 @@ public class Player : MonoBehaviour
 
 
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        DamageDealer damageDealer = collision.gameObject.GetComponent<DamageDealer>();
+        if(damageDealer!=null)
+        {
+            ProcessHit(damageDealer);
+        }
+
+    }
+
+    private void ProcessHit(DamageDealer damageDealer)
+    {
+
+          Debug.Log("Player hit for: " + damageDealer.GetDamage());
+
+
+        playerHealth -= damageDealer.GetDamage();
+
+        damageDealer.Hit();
+        Debug.Log("Player health now: " + playerHealth);
+        if (playerHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

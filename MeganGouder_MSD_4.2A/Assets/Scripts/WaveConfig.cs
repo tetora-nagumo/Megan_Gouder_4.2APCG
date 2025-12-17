@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using NUnit.Framework;
 using UnityEngine;
 
 
@@ -25,6 +26,10 @@ public class WaveConfig : ScriptableObject
     [SerializeField] float enemyMoveSpeed = 2f;
     //the speed the enemies will have
 
+    [SerializeField] int enemyDamage = 2;
+
+    [SerializeField] int timeBetweenWave = 3;
+
 
     void Start()
     {
@@ -45,14 +50,14 @@ public class WaveConfig : ScriptableObject
 
     public List<Transform> GetWaypoints()
     {
-        var waveWaypoints = new List<Transform>();
+        var waveWayPoints = new List<Transform>();
         
 
         foreach (Transform child in pathPrefab.transform)
         {
-            waveWaypoints.Add(child);
+            waveWayPoints.Add(child);
         }
-        return waveWaypoints;
+        return waveWayPoints;
     }
 
     public float GetTimeBetweenSpawns()
@@ -73,6 +78,16 @@ public class WaveConfig : ScriptableObject
     public float GetEnemyMoveSpeed()
     {
         return enemyMoveSpeed;
+    }
+
+    public int GetEnemyDamage()
+    {
+        return enemyDamage;
+    }
+
+    public int GetTimeBetweenWave()
+    {
+        return timeBetweenWave;
     }
     // making all of them accessiable to other scripts 
 

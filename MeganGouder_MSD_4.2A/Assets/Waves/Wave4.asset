@@ -18,3 +18,4 @@ MonoBehaviour:
   spawnRandomFactor: 0.3
   numberOfEnemies: 6
   enemyMoveSpeed: 4
+  enemyDamage: 8
