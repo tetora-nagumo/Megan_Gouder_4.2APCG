@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08c4a1172688c3d4aa27197d494a5846, type: 3}
+  m_Name: NewPointPickUpConfig
+  m_EditorClassIdentifier: Assembly-CSharp::PointPickUpConfig
+  PointsPickUpPrefab: {fileID: 4695620618579175075, guid: a01118c99049d3b4c9377d0900a34dfe, type: 3}
+  minSpawn: 2
+  maxSpawn: 4
