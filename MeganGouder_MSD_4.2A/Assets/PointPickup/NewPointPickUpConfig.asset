@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: NewPointPickUpConfig
   m_EditorClassIdentifier: Assembly-CSharp::PointPickUpConfig
   PointsPickUpPrefab: {fileID: 4695620618579175075, guid: a01118c99049d3b4c9377d0900a34dfe, type: 3}
-  minSpawn: 2
-  maxSpawn: 4
+  minSpawn: 4
+  maxSpawn: 7

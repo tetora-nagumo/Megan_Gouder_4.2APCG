@@ -19,4 +19,4 @@ MonoBehaviour:
   numberOfEnemies: 7
   enemyMoveSpeed: 5
   enemyDamage: 2
-  timeBetweenWave: 1
+  timeBetweenWave: 3

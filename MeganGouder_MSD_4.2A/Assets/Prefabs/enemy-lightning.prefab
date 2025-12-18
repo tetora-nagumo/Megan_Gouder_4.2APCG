@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -6261237848138084192}
   - component: {fileID: -3272991136160451261}
   - component: {fileID: 8625826879304083075}
+  - component: {fileID: 8999038641089666360}
   m_Layer: 9
   m_Name: enemy-lightning
   m_TagString: Untagged
@@ -199,3 +200,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c59e50251c31d44d862ca98db9794ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageDealer
+--- !u!114 &8999038641089666360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723749357099229478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e5f801d8352f49488645b1c5c31fe93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyPrefab
+  health: 100
+  deathVFX: {fileID: 1146902884714770035, guid: 5e6223f0a61a0604189cfeaf1fa2cdfd, type: 3}
+  explosionTime: 2
+  EnemyDestroy: {fileID: 8300000, guid: 60581fc9937c1da48a0cf0eca9f89688, type: 3}
+  EnemyHurt: {fileID: 8300000, guid: 0f211a0b880a6704bb25e30bcb537024, type: 3}
+  enemyDeathVolume: 0.75

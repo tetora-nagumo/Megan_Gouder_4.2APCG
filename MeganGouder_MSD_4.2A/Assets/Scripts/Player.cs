@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,6 +7,16 @@ public class Player : MonoBehaviour
     [SerializeField] float padding = 1f;
     float xMin, xMax, yMin, yMax;
     [SerializeField] int playerHealth = 100;
+
+    [SerializeField] GameObject deathVFX;
+
+    [SerializeField] float explosionTime;
+
+    [SerializeField] AudioClip PlayerHurt;
+
+    [SerializeField] AudioClip PlayerDie;
+
+    [SerializeField][Range(0,1)] float PlayerVolume = 0.75f;
     void Start()
     {
         Boundaries();
@@ -60,12 +69,23 @@ public class Player : MonoBehaviour
 
 
         playerHealth -= damageDealer.GetDamage();
+        AudioSource.PlayClipAtPoint(PlayerHurt,Camera.main.transform.position,PlayerVolume);
 
         damageDealer.Hit();
         Debug.Log("Player health now: " + playerHealth);
         if (playerHealth <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        AudioSource.PlayClipAtPoint(PlayerDie,Camera.main.transform.position,PlayerVolume);
+        Destroy(gameObject);
+        GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
+        Destroy(explosion, 1f);
+        FindAnyObjectByType<level>().LoadGameOver();
+
     }
 }
