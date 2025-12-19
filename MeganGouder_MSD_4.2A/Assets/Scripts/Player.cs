@@ -22,13 +22,18 @@ public class Player : MonoBehaviour
 
     [SerializeField] AudioClip PlayerDie;
 
-    [SerializeField][Range(0,1)] float PlayerVolume = 0.75f;
+    [SerializeField][Range(0, 1)] float PlayerVolume = 0.75f;
     void Start()
     {
-        
+
         Boundaries();
+
+        playerHealth = PlayerPrefs.GetInt("Health", playerHealth);
+        ScoreText scoreText = FindAnyObjectByType<ScoreText>();
+        scoreText.UpdateUI(PlayerPrefs.GetInt("Score", 0));
+
         fireCoroutine = FireContinuously();
-        
+
     }
 
 
@@ -36,13 +41,13 @@ public class Player : MonoBehaviour
     {
         Move();
         Fire();
-        
+
     }
 
 
     private void Move()
     {
-        var deltaX = Input.GetAxis("Horizontal") * Time.deltaTime*moveSpeed; 
+        var deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed;
         var newXPos = Mathf.Clamp(transform.position.x + deltaX, xMin, xMax);
 
         transform.position = new Vector2(newXPos, transform.position.y);
@@ -63,29 +68,29 @@ public class Player : MonoBehaviour
 
     }
 
-  private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-    // Ignore player's own bullets
-    if (collision.CompareTag("PlayerBullet"))
-    {
-        return;
-    }
+        // Ignore player's own bullets
+        if (collision.CompareTag("PlayerBullet"))
+        {
+            return;
+        }
 
-    DamageDealer damageDealer = collision.GetComponent<DamageDealer>();
-    if(damageDealer != null)
-    {
-        ProcessHit(damageDealer);
+        DamageDealer damageDealer = collision.GetComponent<DamageDealer>();
+        if (damageDealer != null)
+        {
+            ProcessHit(damageDealer);
+        }
     }
-}
 
     private void ProcessHit(DamageDealer damageDealer)
     {
 
-          Debug.Log("Player hit for: " + damageDealer.GetDamage());
+        Debug.Log("Player hit for: " + damageDealer.GetDamage());
 
 
         playerHealth -= damageDealer.GetDamage();
-        AudioSource.PlayClipAtPoint(PlayerHurt,Camera.main.transform.position,PlayerVolume);
+        AudioSource.PlayClipAtPoint(PlayerHurt, Camera.main.transform.position, PlayerVolume);
 
         damageDealer.Hit();
         Debug.Log("Player health now: " + playerHealth);
@@ -103,19 +108,19 @@ public class Player : MonoBehaviour
             PlayerPrefs.SetInt("Score", scoreText.GetPoints());
             PlayerPrefs.Save();
         }
-        AudioSource.PlayClipAtPoint(PlayerDie,Camera.main.transform.position,PlayerVolume);
+        AudioSource.PlayClipAtPoint(PlayerDie, Camera.main.transform.position, PlayerVolume);
         Destroy(gameObject);
         GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
         Destroy(explosion, 1f);
         FindAnyObjectByType<Level>().LoadGameOver();
 
     }
-      public int GetPlayerHealth()
+    public int GetPlayerHealth()
     {
         return playerHealth;
     }
 
-     private void Fire()
+    private void Fire()
     {
 
         if (Input.GetButtonDown("Fire1") && SceneManager.GetActiveScene().name == "KittyDefenderLvl2")
@@ -124,27 +129,27 @@ public class Player : MonoBehaviour
             StartCoroutine(fireCoroutine);
         }
         if (Input.GetButtonUp("Fire1"))
-       {
-           StopCoroutine(fireCoroutine);
-       }
+        {
+            StopCoroutine(fireCoroutine);
+        }
 
     }
 
-IEnumerator FireContinuously()
-   {
+    IEnumerator FireContinuously()
+    {
 
-    while (true)
-      {
+        while (true)
+        {
 
-           GameObject laser = Instantiate(laserPrefab, this.transform.position, Quaternion.identity) as GameObject;
-          
-           //give a velocity to the laser
-           laser.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0, projectileSpeed);
+            GameObject laser = Instantiate(laserPrefab, this.transform.position, Quaternion.identity) as GameObject;
 
-           yield return new WaitForSeconds(projectileFiringTime);
-      }
+            //give a velocity to the laser
+            laser.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0, projectileSpeed);
 
-   }
+            yield return new WaitForSeconds(projectileFiringTime);
+        }
+
+    }
 
 
 }

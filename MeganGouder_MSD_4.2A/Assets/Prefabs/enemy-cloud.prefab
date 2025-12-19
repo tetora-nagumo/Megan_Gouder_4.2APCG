@@ -223,4 +223,9 @@ MonoBehaviour:
   explosionTime: 2
   EnemyDestroy: {fileID: 8300000, guid: 60581fc9937c1da48a0cf0eca9f89688, type: 3}
   EnemyHurt: {fileID: 8300000, guid: 0f211a0b880a6704bb25e30bcb537024, type: 3}
-  enemyVolume: 0.75
+  enemyVolume: 0.83143634
+  shotCounter: 0
+  minTimeBetweenShots: 0.2
+  maxTimeBetweenShots: 3
+  enemyLazerPrefab: {fileID: 795555214451644425, guid: 859ed8608c69f234aa0f4cf7532976df, type: 3}
+  enemyLazerSpeed: 10

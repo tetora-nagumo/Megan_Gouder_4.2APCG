@@ -7,7 +7,7 @@ public class PointPickUpSpawner : MonoBehaviour
     public int totalPickUps = 10;
 
     int activePickups = 0;
-    bool finishedSpawning = false; 
+    bool finishedSpawning = false;
 
     void Start()
     {

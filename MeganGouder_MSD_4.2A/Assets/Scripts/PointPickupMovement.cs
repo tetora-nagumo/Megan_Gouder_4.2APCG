@@ -4,9 +4,9 @@ using UnityEngine.SocialPlatforms.Impl;
 public class PointPickupMovement : MonoBehaviour
 {
 
-     [SerializeField] AudioClip PickUp;
+    [SerializeField] AudioClip PickUp;
 
-     [SerializeField][Range(0,1)] float PickUpVol = 0.75f;
+    [SerializeField][Range(0, 1)] float PickUpVol = 0.75f;
     public float pickUpSpeed = 5f;
 
     float xMin, xMax, yMax;
@@ -24,21 +24,21 @@ public class PointPickupMovement : MonoBehaviour
 
         scoreText = FindAnyObjectByType<ScoreText>();
 
-        
+
         float randomX = Random.Range(xMin, xMax);
         transform.position = new Vector3(randomX, yMax, 0);
     }
 
     void Update()
     {
-        
+
         transform.Translate(Vector3.down * pickUpSpeed * Time.deltaTime);
 
         // Destroy when off screen
         float yMin = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).y;
         if (transform.position.y < yMin)
         {
-             if (spawner != null)
+            if (spawner != null)
                 spawner.PickupDestroyed();
 
             Destroy(gameObject);
@@ -58,10 +58,10 @@ public class PointPickupMovement : MonoBehaviour
         {
 
             scoreText.AddPointsPickUp();
-            AudioSource.PlayClipAtPoint(PickUp,Camera.main.transform.position,PickUpVol);
+            AudioSource.PlayClipAtPoint(PickUp, Camera.main.transform.position, PickUpVol);
             if (spawner != null)
                 spawner.PickupDestroyed();
-             Destroy(gameObject);
+            Destroy(gameObject);
 
         }
 
