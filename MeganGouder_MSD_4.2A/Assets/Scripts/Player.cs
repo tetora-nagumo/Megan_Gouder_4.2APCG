@@ -1,8 +1,14 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
 
+    [SerializeField] GameObject laserPrefab;
+    [SerializeField] float projectileSpeed = 20f;
+    [SerializeField] float projectileFiringTime = 0.1f;
+    IEnumerator fireCoroutine;
     [SerializeField] float moveSpeed = 15f;
     [SerializeField] float padding = 1f;
     float xMin, xMax, yMin, yMax;
@@ -19,13 +25,18 @@ public class Player : MonoBehaviour
     [SerializeField][Range(0,1)] float PlayerVolume = 0.75f;
     void Start()
     {
+        
         Boundaries();
+        fireCoroutine = FireContinuously();
+        
     }
 
 
     void Update()
     {
         Move();
+        Fire();
+        
     }
 
 
@@ -52,15 +63,20 @@ public class Player : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+  private void OnTriggerEnter2D(Collider2D collision)
     {
-        DamageDealer damageDealer = collision.gameObject.GetComponent<DamageDealer>();
-        if(damageDealer!=null)
-        {
-            ProcessHit(damageDealer);
-        }
-
+    // Ignore player's own bullets
+    if (collision.CompareTag("PlayerBullet"))
+    {
+        return;
     }
+
+    DamageDealer damageDealer = collision.GetComponent<DamageDealer>();
+    if(damageDealer != null)
+    {
+        ProcessHit(damageDealer);
+    }
+}
 
     private void ProcessHit(DamageDealer damageDealer)
     {
@@ -91,11 +107,44 @@ public class Player : MonoBehaviour
         Destroy(gameObject);
         GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
         Destroy(explosion, 1f);
-        FindAnyObjectByType<level>().LoadGameOver();
+        FindAnyObjectByType<Level>().LoadGameOver();
 
     }
       public int GetPlayerHealth()
     {
         return playerHealth;
     }
+
+     private void Fire()
+    {
+
+        if (Input.GetButtonDown("Fire1") && SceneManager.GetActiveScene().name == "KittyDefenderLvl2")
+        {
+
+            StartCoroutine(fireCoroutine);
+        }
+        if (Input.GetButtonUp("Fire1"))
+       {
+           StopCoroutine(fireCoroutine);
+       }
+
+    }
+
+IEnumerator FireContinuously()
+   {
+
+    while (true)
+      {
+
+           GameObject laser = Instantiate(laserPrefab, this.transform.position, Quaternion.identity) as GameObject;
+          
+           //give a velocity to the laser
+           laser.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0, projectileSpeed);
+
+           yield return new WaitForSeconds(projectileFiringTime);
+      }
+
+   }
+
+
 }

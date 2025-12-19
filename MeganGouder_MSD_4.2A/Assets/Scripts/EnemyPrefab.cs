@@ -4,7 +4,7 @@ using UnityEngine.SocialPlatforms.Impl;
 public class EnemyPrefab : MonoBehaviour
 {
     [Header("Enemy Stats")]
-    [SerializeField] float health = 100;
+    [SerializeField] float health = 20;
     [Header("Effects")]
     [SerializeField] GameObject deathVFX;
 
@@ -16,24 +16,31 @@ public class EnemyPrefab : MonoBehaviour
 
     [SerializeField] [ Range(0,1)] float enemyVolume = 0.75f;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    
+
+  private void OnTriggerEnter2D(Collider2D collision)
     {
-        DamageDealer damageDealer = collision.gameObject.GetComponent<DamageDealer>();
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             Die();
+            return;
         }
-        else if(damageDealer!=null)
+
+    
+        DamageDealer damageDealer = collision.GetComponent<DamageDealer>();
+        if (damageDealer != null)
         {
             ProcessHit(damageDealer);
         }
-
     }
+    
 
     private void ProcessHit(DamageDealer damageDealer)
     {
-
+        
+        Debug.Log("Enemy hit! Damage: " + damageDealer.GetDamage());
         health -= damageDealer.GetDamage();
+        Debug.Log("Enemy health now: " + health);
         AudioSource.PlayClipAtPoint(EnemyHurt, Camera.main.transform.position, enemyVolume);
         damageDealer.Hit();
         if (health <= 0)
@@ -49,5 +56,6 @@ public class EnemyPrefab : MonoBehaviour
         GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
         Destroy(explosion, explosionTime);
     }
+    
     
 }

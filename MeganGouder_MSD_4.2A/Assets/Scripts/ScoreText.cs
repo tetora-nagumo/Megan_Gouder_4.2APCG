@@ -9,19 +9,28 @@ public class ScoreText : MonoBehaviour
     void Start()
     {
         scoreText = GetComponent<TMP_Text>();
-        points = PlayerPrefs.GetInt("Score", 0);
-        scoreText.text = points.ToString();
+
+        int savedScore = PlayerPrefs.GetInt("Score", 0);
+        UpdateUI(savedScore);
     }
 
     public void AddPointsPickUp()
     {
-        points += 10;
+        UpdateUI(points + 10);
+        PlayerPrefs.SetInt("Score", points);
+        PlayerPrefs.Save();
+    }
+
+    public void UpdateUI(int newPoints)
+    {
+        points = newPoints;
         scoreText.text = points.ToString();
     }
 
     public int GetPoints()
     {
-    return points;
+        return points;
     }
 }
+
 

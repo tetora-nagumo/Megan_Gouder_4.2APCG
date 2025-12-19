@@ -105,6 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4302f1658a75c9488bd25f32a5f638a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  laserPrefab: {fileID: 7211360369641758527, guid: 793a4db6dd6d86c45bd53028ed5ad32a, type: 3}
   moveSpeed: 10
   padding: 1
   playerHealth: 100

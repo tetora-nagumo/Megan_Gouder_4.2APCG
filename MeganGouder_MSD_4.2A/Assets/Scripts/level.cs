@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class level : MonoBehaviour
+public class Level : MonoBehaviour
 {
     [SerializeField] float DelaySeconds = 2f;
 
@@ -15,6 +15,7 @@ public class level : MonoBehaviour
     public void LoadGame()
     {
         PlayerPrefs.SetInt("Score", FindAnyObjectByType<ScoreText>().GetPoints());
+        PlayerPrefs.SetInt("Health", FindAnyObjectByType<Player>().GetPlayerHealth());
         PlayerPrefs.Save();
         SceneManager.LoadScene("KittyDefender");
     }
@@ -41,5 +42,24 @@ public class level : MonoBehaviour
     PlayerPrefs.Save();
     SceneManager.LoadScene("KittyDefender");
 }
-    
+
+    public void LoadLevel2()
+    {
+        ScoreText scoreText = FindAnyObjectByType<ScoreText>();
+        Player health = FindAnyObjectByType<Player>();
+        if (scoreText != null)
+        {
+            PlayerPrefs.SetInt("Score", scoreText.GetPoints());
+            PlayerPrefs.SetInt("Health", health.GetPlayerHealth());
+            PlayerPrefs.Save();
+        }
+
+    SceneManager.LoadScene("KittyDefenderLvl2");
+    }
+
+    public void LoadWinScreen()
+    {
+        SceneManager.LoadScene("WinScreen");
+    }
 }
+

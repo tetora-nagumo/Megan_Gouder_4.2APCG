@@ -248,9 +248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e5f801d8352f49488645b1c5c31fe93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPrefab
-  health: 100
+  health: 15
   deathVFX: {fileID: 1146902884714770035, guid: 5e6223f0a61a0604189cfeaf1fa2cdfd, type: 3}
   explosionTime: 2
   EnemyDestroy: {fileID: 8300000, guid: 60581fc9937c1da48a0cf0eca9f89688, type: 3}
   EnemyHurt: {fileID: 8300000, guid: 0f211a0b880a6704bb25e30bcb537024, type: 3}
-  enemyDeathVolume: 0.75
+  enemyVolume: 0.75

@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Collections;
+
 public class PointPickUpSpawner : MonoBehaviour
 {
-   public PointPickUpConfig config;
+    public PointPickUpConfig config;
+    public int totalPickUps = 10;
 
-   public int totalPickUps = 10;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    int activePickups = 0;
+    bool finishedSpawning = false; 
+
     void Start()
     {
         StartCoroutine(PickUpSpawn());
@@ -18,7 +21,39 @@ public class PointPickUpSpawner : MonoBehaviour
             float waitTime = Random.Range(config.minSpawn, config.maxSpawn);
             yield return new WaitForSeconds(waitTime);
 
-            Instantiate(config.PointsPickUpPrefab, new Vector3(0 , 11 , 0), Quaternion.identity);
+            float randomX = Random.Range(-8f, 8f);
+            GameObject pickup = Instantiate(config.PointsPickUpPrefab, new Vector3(randomX, 11, 0), Quaternion.identity);
+
+            PointPickupMovement ppm = pickup.GetComponent<PointPickupMovement>();
+            if (ppm != null)
+            {
+                ppm.spawner = this;
+            }
+
+            activePickups++;
         }
+
+        finishedSpawning = true;
+
+        yield return new WaitUntil(() => activePickups <= 0);
+
+        if (finishedSpawning)
+        {
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "KittyDefenderLvl2")
+            {
+                FindAnyObjectByType<Level>().LoadWinScreen();
+            }
+            else
+            {
+                FindAnyObjectByType<Level>().LoadLevel2();
+            }
+
+            finishedSpawning = false;
+        }
+    }
+
+    public void PickupDestroyed()
+    {
+        activePickups--;
     }
 }

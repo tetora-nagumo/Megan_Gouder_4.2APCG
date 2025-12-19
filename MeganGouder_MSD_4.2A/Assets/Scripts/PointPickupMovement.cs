@@ -14,6 +14,8 @@ public class PointPickupMovement : MonoBehaviour
 
     ScoreText scoreText;
 
+    [HideInInspector] public PointPickUpSpawner spawner;
+
     void Start()
     {
         mainCamera = Camera.main;
@@ -36,6 +38,9 @@ public class PointPickupMovement : MonoBehaviour
         float yMin = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).y;
         if (transform.position.y < yMin)
         {
+             if (spawner != null)
+                spawner.PickupDestroyed();
+
             Destroy(gameObject);
         }
     }
@@ -54,6 +59,8 @@ public class PointPickupMovement : MonoBehaviour
 
             scoreText.AddPointsPickUp();
             AudioSource.PlayClipAtPoint(PickUp,Camera.main.transform.position,PickUpVol);
+            if (spawner != null)
+                spawner.PickupDestroyed();
              Destroy(gameObject);
 
         }
