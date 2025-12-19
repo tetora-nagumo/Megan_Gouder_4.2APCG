@@ -81,11 +81,21 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
+        ScoreText scoreText = FindAnyObjectByType<ScoreText>();
+        if (scoreText != null)
+        {
+            PlayerPrefs.SetInt("Score", scoreText.GetPoints());
+            PlayerPrefs.Save();
+        }
         AudioSource.PlayClipAtPoint(PlayerDie,Camera.main.transform.position,PlayerVolume);
         Destroy(gameObject);
         GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
         Destroy(explosion, 1f);
         FindAnyObjectByType<level>().LoadGameOver();
 
+    }
+      public int GetPlayerHealth()
+    {
+        return playerHealth;
     }
 }

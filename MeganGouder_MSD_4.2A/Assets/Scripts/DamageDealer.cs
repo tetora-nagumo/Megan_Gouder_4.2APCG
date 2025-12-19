@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DamageDealer : MonoBehaviour
 {
+    
     int damage = 1;
     public void SetDamage(int damageAmount)
     {
@@ -15,6 +16,7 @@ public class DamageDealer : MonoBehaviour
 
     public void Hit()
     {
+        
         Destroy(gameObject);
     }
 }

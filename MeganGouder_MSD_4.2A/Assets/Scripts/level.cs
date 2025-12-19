@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 public class level : MonoBehaviour
 {
     [SerializeField] float DelaySeconds = 2f;
+
+    
     public void LoadStartMenu()
     {
         SceneManager.LoadScene(0);
@@ -12,6 +14,8 @@ public class level : MonoBehaviour
 
     public void LoadGame()
     {
+        PlayerPrefs.SetInt("Score", FindAnyObjectByType<ScoreText>().GetPoints());
+        PlayerPrefs.Save();
         SceneManager.LoadScene("KittyDefender");
     }
 
@@ -30,4 +34,12 @@ public class level : MonoBehaviour
         yield return new WaitForSeconds(DelaySeconds);
         SceneManager.LoadScene("GameOver");
     }
+
+    public void StartNewGame()
+{
+    PlayerPrefs.SetInt("Score", 0);
+    PlayerPrefs.Save();
+    SceneManager.LoadScene("KittyDefender");
+}
+    
 }

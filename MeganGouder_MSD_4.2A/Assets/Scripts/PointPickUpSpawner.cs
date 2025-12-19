@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 public class PointPickUpSpawner : MonoBehaviour
 {
-
    public PointPickUpConfig config;
 
    public int totalPickUps = 10;

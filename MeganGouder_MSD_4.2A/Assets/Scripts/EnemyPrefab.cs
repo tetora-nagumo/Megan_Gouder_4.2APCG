@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class EnemyPrefab : MonoBehaviour
 {
+    [Header("Enemy Stats")]
     [SerializeField] float health = 100;
+    [Header("Effects")]
     [SerializeField] GameObject deathVFX;
 
     [SerializeField] float explosionTime = 1f;

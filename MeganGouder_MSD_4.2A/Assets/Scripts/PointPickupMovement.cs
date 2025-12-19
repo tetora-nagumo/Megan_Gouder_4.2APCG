@@ -1,16 +1,26 @@
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PointPickupMovement : MonoBehaviour
 {
+
+     [SerializeField] AudioClip PickUp;
+
+     [SerializeField][Range(0,1)] float PickUpVol = 0.75f;
     public float pickUpSpeed = 5f;
 
     float xMin, xMax, yMax;
     Camera mainCamera;
 
+    ScoreText scoreText;
+
     void Start()
     {
         mainCamera = Camera.main;
         SetBoundaries();
+
+
+        scoreText = FindAnyObjectByType<ScoreText>();
 
         
         float randomX = Random.Range(xMin, xMax);
@@ -35,5 +45,18 @@ public class PointPickupMovement : MonoBehaviour
         xMin = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
         xMax = mainCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
         yMax = mainCamera.ViewportToWorldPoint(new Vector3(0, 1, 0)).y;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+
+            scoreText.AddPointsPickUp();
+            AudioSource.PlayClipAtPoint(PickUp,Camera.main.transform.position,PickUpVol);
+             Destroy(gameObject);
+
+        }
+
     }
 }

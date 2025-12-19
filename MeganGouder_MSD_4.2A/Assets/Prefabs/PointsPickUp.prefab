@@ -166,4 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e36f13801a166cb4985c780e0a2f3f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PointPickupMovement
-  PickUpspeed: 5
+  PickUp: {fileID: 8300000, guid: 9c0d33bd3a40a2d46af7711ce3df4a6b, type: 3}
+  PickUpVol: 1
+  pickUpSpeed: 5
+  scoreText: {fileID: 0}
