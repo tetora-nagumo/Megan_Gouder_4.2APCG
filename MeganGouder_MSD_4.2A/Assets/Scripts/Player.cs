@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject laserPrefab;
     [SerializeField] float projectileSpeed = 20f;
     [SerializeField] float projectileFiringTime = 0.1f;
-    IEnumerator fireCoroutine;
+    Coroutine fireCoroutine;
     [SerializeField] float moveSpeed = 15f;
     [SerializeField] float padding = 1f;
     float xMin, xMax, yMin, yMax;
@@ -31,8 +31,6 @@ public class Player : MonoBehaviour
         playerHealth = PlayerPrefs.GetInt("Health", playerHealth);
         ScoreText scoreText = FindAnyObjectByType<ScoreText>();
         scoreText.UpdateUI(PlayerPrefs.GetInt("Score", 0));
-
-        fireCoroutine = FireContinuously();
 
     }
 
@@ -122,17 +120,23 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
-
-        if (Input.GetButtonDown("Fire1") && SceneManager.GetActiveScene().name == "KittyDefenderLvl2")
+        if (Input.GetButtonDown("Fire1") &&
+            SceneManager.GetActiveScene().name == "KittyDefenderLvl2")
         {
-
-            StartCoroutine(fireCoroutine);
+            if (fireCoroutine == null)
+            {
+                fireCoroutine = StartCoroutine(FireContinuously());
+            }
         }
+
         if (Input.GetButtonUp("Fire1"))
         {
-            StopCoroutine(fireCoroutine);
+            if (fireCoroutine != null)
+            {
+                StopCoroutine(fireCoroutine);
+                fireCoroutine = null;
+            }
         }
-
     }
 
     IEnumerator FireContinuously()
